@@ -2,20 +2,21 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 
+	"github.com/AmanAmazing/theInstructor/controllers"
+	"github.com/AmanAmazing/theInstructor/initializers"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"github.com/joho/godotenv"
+	"gorm.io/gorm"
 )
 
-func init() {
-	err := godotenv.Load(".env")
-    if err!=nil{
-        log.Fatalf("loading env error!: %s",err)
-    }
 
+var DB *gorm.DB
+
+func init() {
+    initializers.LoadEnvVariables()
+    initializers.ConnectToDB()
 }
 
 func main() {
@@ -29,13 +30,14 @@ func main() {
 
 
 func normalRoutes(r chi.Router){
-    
-    r.Get("/home",func(w http.ResponseWriter,r *http.Request){
-        w.Write([]byte("home page"))
-    })
+    r.Post("/login",controllers.PostLogin)
+    r.Get("/login",controllers.GetLogin)
+    r.Post("/signup",controllers.PostSignup)
+    r.Get("/signup",controllers.GetSignup)
 }
 
 func protectedRoutes(r chi.Router){
+
     r.Get("/secret",func (w http.ResponseWriter, r *http.Request){
         w.Write([]byte("secret page"))
         fmt.Println("testing logging")
