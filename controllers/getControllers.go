@@ -8,11 +8,22 @@ import (
 
 
 func GetSignup(w http.ResponseWriter,r *http.Request){
-    tmpl := template.Must(template.ParseFiles("assets/signup.html")) 
+    tmpl := template.Must(template.ParseFiles("templates/signup.html")) 
     tmpl.Execute(w, nil)
 }
 
 func GetLogin(w http.ResponseWriter,r *http.Request){
-    tmpl := template.Must(template.ParseFiles("assets/login.html")) 
+    tmpl := template.Must(template.ParseFiles("templates/login.html")) 
     tmpl.Execute(w, nil)
 }
+
+func GetHome(w http.ResponseWriter,r *http.Request){
+    tmpl := template.Must(template.ParseFiles("templates/home.html")) 
+    tmpl.Execute(w, nil)
+}
+
+func GetStudents(w http.ResponseWriter,r *http.Request){
+    tmpl := template.Must(template.ParseFiles("templates/students.html")) 
+    tmpl.Execute(w, nil)
+}
+
