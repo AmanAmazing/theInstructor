@@ -31,6 +31,9 @@ func main() {
 
 
 func normalRoutes(r chi.Router){
+    r.Get("/",func(w http.ResponseWriter,r *http.Request){
+        w.Write([]byte("<h1>Have a show you stink</h1>"))
+    })
     r.Post("/login",controllers.PostLogin)
     r.Get("/login",controllers.GetLogin)
     r.Post("/signup",controllers.PostSignup)
