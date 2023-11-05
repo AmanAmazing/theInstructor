@@ -18,12 +18,21 @@ func GetLogin(w http.ResponseWriter,r *http.Request){
 }
 
 func GetHome(w http.ResponseWriter,r *http.Request){
-    tmpl := template.Must(template.ParseFiles("templates/home.html")) 
+    //tmpl := template.Must(template.ParseFiles("templates/home.html")) 
+    tmpl := template.Must(template.ParseFiles(
+        "templates/home.html",
+        "templates/constants/navbar.html",
+        "templates/constants/footer.html",
+    ))
     tmpl.Execute(w, nil)
 }
 
 func GetStudents(w http.ResponseWriter,r *http.Request){
-    tmpl := template.Must(template.ParseFiles("templates/students.html")) 
+    tmpl := template.Must(template.ParseFiles(
+        "templates/students.html",
+        "templates/constants/navbar.html",
+        "templates/constants/footer.html",
+    ))
     tmpl.Execute(w, nil)
 }
 

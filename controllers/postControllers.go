@@ -15,12 +15,12 @@ func PostLogin(w http.ResponseWriter,r *http.Request){
     user := models.User{}
     // check if password and email values are not nil  
     user.Email = r.FormValue("email")
-    user.Password = r.FormValue("password")
-    if user.Password == ""{
+    user.PasswordHash = r.FormValue("password")
+    if user.PasswordHash == ""{
         w.WriteHeader(http.StatusInternalServerError)
         return
     }
-    if user.Password == "" {
+    if user.PasswordHash == "" {
         w.WriteHeader(http.StatusInternalServerError)
         return
     }
@@ -39,7 +39,7 @@ func PostLogin(w http.ResponseWriter,r *http.Request){
         }
     }
     // compare if the password is correct
-    if helpers.CheckPasswordMatch(userDb.Password, user.Password) == false {
+    if helpers.CheckPasswordMatch(userDb.PasswordHash, user.PasswordHash) == false {
         w.WriteHeader(http.StatusUnauthorized)
         return
     }
@@ -65,8 +65,9 @@ func PostSignup(w http.ResponseWriter,r *http.Request){
     user.FirstName = r.FormValue("firstName")
     user.LastName = r.FormValue("lastName")
     user.Email = r.FormValue("email")
+    user.Role = r.FormValue("role")
     // hashing the password
-    user.Password, err = helpers.HashPassword(r.FormValue("password"))
+    user.PasswordHash, err = helpers.HashPassword(r.FormValue("password"))
     if err != nil{
         w.WriteHeader(http.StatusInternalServerError)
         return
